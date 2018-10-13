@@ -1,4 +1,5 @@
 import axios from 'axios'
+import qs from 'qs';
 import { Message, MessageBox } from 'element-ui'
 import store from '../store'
 import { getToken } from '@/utils/auth'
@@ -9,11 +10,16 @@ const service = axios.create({
   timeout: 5000 // 请求超时时间
 })
 
+
 // request拦截器
 service.interceptors.request.use(
   config => {
     if (store.getters.token) {
       config.headers['X-Token'] = getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
+    }
+    if(config.method == 'post'){
+      Object.assign(config.headers, {'Content-Type': 'application/x-www-form-urlencoded'});
+      config.data = qs.stringify(config.data);
     }
     return config
   },
