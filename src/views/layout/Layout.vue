@@ -17,7 +17,7 @@ export default {
   name: 'Layout',
   components: {
     Navbar,
-    Sidebar,
+    Sidebar,//侧边栏
     AppMain
   },
   mixins: [ResizeMixin],

@@ -29,8 +29,10 @@ const user = {
     Login({ commit }, userInfo) {
       const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
-        login(username, userInfo.password).then(response => {
-          const data = response.data
+        login(username, userInfo.password, 2).then(response => {
+
+          console.log(JSON.stringify(response));
+          const data = response
           setToken(data.token)
           commit('SET_TOKEN', data.token)
           resolve()
@@ -50,8 +52,8 @@ const user = {
           } else {
             reject('getInfo: roles must be a non-null array !')
           }
-          commit('SET_NAME', data.name)
-          commit('SET_AVATAR', data.avatar)
+          commit('SET_NAME', data.user.name)
+          commit('SET_AVATAR', data.user.avatar)
           resolve(response)
         }).catch(error => {
           reject(error)
