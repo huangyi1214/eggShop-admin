@@ -60,18 +60,26 @@ export const constantRouterMap = [
       }
     ]
   },
+  { path: '*', redirect: '/404', hidden: true }
+]
 
+export default new Router({
+  // mode: 'history', //后端支持可开
+  scrollBehavior: () => ({ y: 0 }),
+  routes: constantRouterMap
+})
+export const asyncRouterMap = [
   {
     path: '/form',
     component: Layout,
     name: 'form',
-    meta: { title: 'form', icon: 'form' },
+    meta: { title: 'form', icon: 'form', role: ['admin', 'super_editor'] },
     children: [
       {
         path: 'index',
         name: 'Form',
         component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
+        meta: { title: 'Form', icon: 'form', role: ['admin', 'super_editor'] }
       },
       {
         path: 'index1',
@@ -81,13 +89,4 @@ export const constantRouterMap = [
       }
     ]
   },
-
-
-  { path: '*', redirect: '/404', hidden: true }
-]
-
-export default new Router({
-  // mode: 'history', //后端支持可开
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRouterMap
-})
+  { path: '*', redirect: '/404', hidden: true }]
