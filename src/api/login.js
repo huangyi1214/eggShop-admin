@@ -12,11 +12,11 @@ export function login(phone, password, type) {
   })
 }
 
-export function getInfo(token) {
+export function getInfo() {
   return request({
     url: '/getUserInfo',
     method: 'get',
-    params: { token }
+    params: {  }
   })
 }
 

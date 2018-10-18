@@ -37,27 +37,7 @@ export const constantRouterMap = [
       component: () => import('@/views/dashboard/index')
     }]
   },
-  {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'example' },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
-      }
-    ]
-  },
+
   { path: '*', redirect: '/404', hidden: true }
 ]
 
@@ -81,22 +61,42 @@ export const asyncRouterMap = [
     }]
   },
   {
-    path: '/form',
+    path: '/user',
     component: Layout,
-    name: 'form',
-    meta: { title: 'form', icon: 'form', role: ['admin', 'super_editor'] },
+    name: 'user',
+    meta: { title: '会员中心', icon: 'form' },
     children: [
       {
         path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form', role: ['admin', 'super_editor'] }
+        name: '客户端',
+        component: () => import('@/views/customer/index'),
+        meta: { title: '客户端', icon: 'form' }
       },
       {
         path: 'index1',
         name: 'Form1',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form1', icon: 'form' }
+        component: () => import('@/views/manager/manager'),
+        meta: { title: '经理端', icon: 'form' }
+      }
+    ]
+  },
+  {
+    path: '/product',
+    component: Layout,
+    name: 'product',
+    meta: { title: '产品中心', icon: 'form' },
+    children: [
+      {
+        path: 'internal',
+        name: '内部产品',
+        component: () => import('@/views/product/internal'),
+        meta: { title: '内部产品', icon: 'form' }
+      },
+      {
+        path: 'proxy',
+        name: '代理产品',
+        component: () => import('@/views/product/proxy'),
+        meta: { title: '代理产品', icon: 'form' }
       }
     ]
   },

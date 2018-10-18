@@ -7,6 +7,8 @@ import { asyncRouterMap, constantRouterMap } from '@/router'
  */
 function hasPermission(roles, route) {
   if (route.meta && route.meta.roles) {
+    console.log('roles:'+JSON.stringify(route.meta));
+
     return roles.some(role => route.meta.roles.includes(role))
   } else {
     return true
@@ -43,21 +45,22 @@ const permission = {
     SET_ROUTERS: (state, routers) => {
       state.addRouters = routers;
       state.routers = constantRouterMap.concat(routers);
-      console.log('state.routers = ',state.routers);
+
     }
   },
   actions: {
     GenerateRoutes({ commit }, data) {
       return new Promise(resolve => {
-        console.log('GenerateRoutes',data);
+
         const { roles } = data;
         let accessedRouters;
+
         if (roles.includes('admin')) {
           accessedRouters = asyncRouterMap;
         } else {
           accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
         }
-        console.log('accessedRouters = ',accessedRouters);
+
         commit('SET_ROUTERS', accessedRouters);
         resolve()
       })
