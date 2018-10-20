@@ -4,10 +4,9 @@
         <el-input placeholder="请输入手机号" v-model="listQuery.PHONE" style="width: 200px;" class="filter-item" />
         <el-input placeholder="请输入姓名" v-model="listQuery.NAME" style="width: 200px;" class="filter-item" />
           <!-- <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item"/> -->
-        </el-select>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
+      <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
       <!-- <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
-      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">{{ $t('table.export') }}</el-button>
+      <el-button :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">{{ $t('table.export') }}</el-button>
       <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">{{ $t('table.reviewer') }}</el-checkbox> -->
     </div>
 
@@ -100,7 +99,7 @@
     <el-col :span="12"><div>户籍情况:<span>{{form.censusTypeName}}</span></div></el-col>
     <el-col :span="12"><div>社保情况:<span>{{form.Social_securityTypeName}}</span></div></el-col>
   </el-row>
- 
+
   <div slot="footer" class="dialog-footer">
     <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
   </div>

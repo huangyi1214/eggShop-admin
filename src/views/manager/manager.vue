@@ -6,9 +6,8 @@
         <el-select v-model="listQuery.busnessType" :placeholder="请选择信贷类型" clearable style="width: 400px" class="filter-item">
           <el-option v-for="item in busnessTypes" :key="item.ID" :label="item.name" :value="item.ID"/>
         </el-select>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
       <!-- <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
-      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">{{ $t('table.export') }}</el-button>
+      <el-button :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">{{ $t('table.export') }}</el-button>
       <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">{{ $t('table.reviewer') }}</el-checkbox> -->
     </div>
 
@@ -89,7 +88,7 @@
     <el-row>
             <el-col :span="8"><div><img v-bind:src=form.WORK_PERMIT style="width:100%"></img></div></el-col>
   </el-row>
- 
+
   <div slot="footer" class="dialog-footer">
     <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
   </div>
