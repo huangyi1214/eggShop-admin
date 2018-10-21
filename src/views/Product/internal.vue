@@ -45,21 +45,17 @@
                  v-on:onclick="enable(scope.row.isenable)" value="scope.row.isenable"  :disabled="true">
         </template>
       </el-table-column>
-      <el-table-column align="center" label="" width="120">
+      <el-table-column align="center" label="" width="240">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="showDetail(scope.row)">详情</el-button>
+          <el-button type="primary" size="mini" @click="showType(scope.row)">贷款类型</el-button>
         </template>
       </el-table-column>
 
     </el-table>
-    <!-- <div class="pagination-container">
-      <el-pagination v-show="total>0" :current-page="listQuery.page" :page-sizes="[10,20,30, 50]"
-                     :page-size="listQuery.limit" :total="total" background
-                     layout="total, sizes, prev, pager, next, jumper" @size-change="handleSizeChange"
-                     @current-change="handleCurrentChange"/>
-    </div> -->
 
-    <el-dialog title="产品资料" :visible.sync="dialogVisible">
+
+    <el-dialog title="产品贷款类型" :visible.sync="dialogVisible">
       <el-form>
         <el-row class="row">
           <el-col :span="12">
@@ -112,11 +108,34 @@
         <el-button type="primary" @click="save">确 定</el-button>
       </div>
     </el-dialog>
+
+    <el-dialog title="产品资料" :visible.sync="dialogTypeVisible">
+      <el-form>
+        <el-row>
+          <el-col :span="8">
+            <el-select v-model="busnessType" :placeholder="selectTypeTitle" clearable style="width: 100%" class="filter-item">
+              <el-option v-for="item in busnessTypes" :key="item.ID" :label="item.name" :value="item.ID"/>
+            </el-select>
+          </el-col>
+          <el-col :span="8">
+                  <el-button class="filter-item" type="primary" icon="el-icon-plus" @click="CreateProducttype">新增</el-button>
+
+          </el-col>
+        </el-row>
+
+  
+      </el-form>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="save">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { getList, create, update } from "@/api/product";
+import { getType } from "@/api/manager";
 // import "babel-polyfill"; // es6 shim
 import myUpload from "vue-image-crop-upload";
 
@@ -134,8 +153,10 @@ export default {
   data() {
     return {
       list: null,
+      selectTypeTitle: "请选择贷款类型",
       listLoading: true,
       dialogVisible: false,
+      dialogTypeVisible: false,
       imageurl: "",
       form: {
         NAME: "",
@@ -164,7 +185,9 @@ export default {
         smail: "*_~"
       },
       imgDataUrl: "",
-      uploadurl: "http://127.0.0.1:8090/uploadfile"
+      uploadurl: "http://127.0.0.1:8090/uploadfile",
+      busnessTypes: [],
+      busnessType: ''
     };
   },
   created() {
@@ -177,10 +200,18 @@ export default {
         this.list = response.data;
         this.listLoading = false;
       });
+      getType().then(response => {
+        console.log("type list.data:" + JSON.stringify(response.data));
+        this.busnessTypes = response.data;
+      });
     },
     showDetail(row) {
       this.form = Object.assign(row, {});
       this.dialogVisible = true;
+    },
+    showType(row) {
+      this.form = Object.assign(row, {});
+      this.dialogTypeVisible = true;
     },
     dialogFormVisible() {
       this.dialogVisible = false;
@@ -241,13 +272,15 @@ export default {
     },
     save() {
       console.log("save");
-      let self=this;
+      let self = this;
       if (typeof this.form.ID === "number" && !isNaN(this.form.ID)) {
         self.form.isenable = this.form.isenable ? 1 : 0;
-        update(this.form).then(response => {
-          self.dialogVisible = false;
-          self.$message.success("修改成功！");
-        }).catch(()=>{});
+        update(this.form)
+          .then(response => {
+            self.dialogVisible = false;
+            self.$message.success("修改成功！");
+          })
+          .catch(() => {});
       } else {
         create(this.form).then(response => {
           self.form.isenable = this.form.isenable ? 1 : 0;
@@ -256,7 +289,10 @@ export default {
           self.fetchData();
         });
       }
-    }
+    },
+    CreateProducttype(){
+
+    },
   },
   components: {
     "my-upload": myUpload
