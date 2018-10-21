@@ -86,7 +86,7 @@
           </el-col>
         </el-row>
         <el-row class="row">
-          <el-col :span="8"><span>是否可用</span>         
+          <el-col :span="8"><span>是否可用</span>
            <input type="checkbox" :checked="form.isenable==0 ? false: true"
                   v-model="form.isenable">
             </el-col>
@@ -241,19 +241,18 @@ export default {
     },
     save() {
       console.log("save");
-      
+      let self=this;
       if (typeof this.form.ID === "number" && !isNaN(this.form.ID)) {
         self.form.isenable = this.form.isenable ? 1 : 0;
         update(this.form).then(response => {
           self.dialogVisible = false;
-          self.message.show("修改成功！");
+          self.$message.success("修改成功！");
         }).catch(()=>{});
       } else {
         create(this.form).then(response => {
-          let self=this;
           self.form.isenable = this.form.isenable ? 1 : 0;
           self.dialogVisible = false;
-          self.$message.show("创建成功！");
+          self.$message.success("创建成功！");
           self.fetchData();
         });
       }
