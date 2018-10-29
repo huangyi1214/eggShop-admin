@@ -24,3 +24,27 @@ export function update(params) {
     data: params
   })
 }
+export function getproductbytype(params) {
+  console.log(JSON.stringify(params));
+  return request({
+    url: '/getproductbytype',
+    method: 'post',
+    data: params
+  })
+}
+export function createproductType(params) {
+  console.log(JSON.stringify(params));
+  return request({
+    url: '/createproductType',
+    method: 'post',
+    data: params
+  })
+}
+export function updatetypestatus(params) {
+  console.log(JSON.stringify(params));
+  return request({
+    url: '/updateproductTypestatus',
+    method: 'post',
+    data: params
+  })
+}

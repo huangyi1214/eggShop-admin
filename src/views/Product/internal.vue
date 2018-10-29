@@ -55,7 +55,7 @@
     </el-table>
 
 
-    <el-dialog title="产品贷款类型" :visible.sync="dialogVisible">
+    <el-dialog title="产品资料" :visible.sync="dialogVisible">
       <el-form>
         <el-row class="row">
           <el-col :span="12">
@@ -109,7 +109,7 @@
       </div>
     </el-dialog>
 
-    <el-dialog title="产品资料" :visible.sync="dialogTypeVisible">
+    <el-dialog title="产品贷款类型" :visible.sync="dialogTypeVisible">
       <el-form>
         <el-row>
           <el-col :span="8">
@@ -122,19 +122,46 @@
 
           </el-col>
         </el-row>
+        <el-row>
+          <el-table
+      v-loading="listLoading"
+      :data="typelist"
+      element-loading-text="Loading"
+      border
+      fit
+      highlight-current-row
+      style="width:100%">
+      <el-table-column align="center" label="名称" width="100">
+        <template slot-scope="scope">
+          {{ scope.row.name}}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="状态" width="100">
+        <template slot-scope="scope">
+          {{ scope.row.isEnable==1?'可用':'禁用'}}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="" width="100">
+        <template slot-scope="scope">
+                  <el-button v-if="scope.row.isEnable==1" class="filter-item" type="primary"  @click="updatetypestatus(scope.row.productTypeid,0)">禁用</el-button>
+                  <el-button v-else class="filter-item" type="primary"  @click="updatetypestatus(scope.row.productTypeid,1)">启用</el-button>
 
+        </template>
+      </el-table-column>
+    </el-table>
+        </el-row>
   
       </el-form>
 
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="save">确 定</el-button>
+        <el-button type="primary" @click="closeprudocttype">确 定</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { getList, create, update } from "@/api/product";
+import { getList, create, update, getproductbytype,createproductType,updatetypestatus } from "@/api/product";
 import { getType } from "@/api/manager";
 // import "babel-polyfill"; // es6 shim
 import myUpload from "vue-image-crop-upload";
@@ -187,7 +214,9 @@ export default {
       imgDataUrl: "",
       uploadurl: "http://127.0.0.1:8090/uploadfile",
       busnessTypes: [],
-      busnessType: ''
+      busnessType: '',
+      typelist:[],
+      selectProductID:-1
     };
   },
   created() {
@@ -210,7 +239,8 @@ export default {
       this.dialogVisible = true;
     },
     showType(row) {
-      this.form = Object.assign(row, {});
+      this.selectProductID = row.ID;
+      this.getProducttype();
       this.dialogTypeVisible = true;
     },
     dialogFormVisible() {
@@ -291,8 +321,27 @@ export default {
       }
     },
     CreateProducttype(){
-
+        let self = this;
+        createproductType({productid:this.selectProductID,typeid:this.busnessType}).then(response => {
+                  self.$message.success("新增贷款类型成功！");
+                  self.getProducttype();
+                });
     },
+    getProducttype(){
+        let self = this;
+        getproductbytype({product:this.selectProductID}).then(response => {
+                      this.typelist=response.data;
+                    });
+    },
+    updatetypestatus(producttypeid,status){
+        let self = this;
+        updatetypestatus({productTypeid:producttypeid,IsEnable:status}).then(response => {
+                      this.getProducttype();
+                    });
+    },
+    closeprudocttype(){
+      this.dialogTypeVisible=false;
+    }
   },
   components: {
     "my-upload": myUpload
