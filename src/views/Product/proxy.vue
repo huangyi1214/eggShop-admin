@@ -103,7 +103,7 @@
           <el-col :span="8"><img v-bind:src=form.image style="width:100%"></el-col>
         </el-row>
         <el-row>
-          <Tinymce ref="editor" :height="400"  />
+          <tinymce  ref="editor" :height="400" v-model="editContent" />
         </el-row>
       </el-form>
 
@@ -153,7 +153,7 @@
       </el-table-column>
     </el-table>
         </el-row>
-  
+
       </el-form>
 
       <div slot="footer" class="dialog-footer">
@@ -223,7 +223,8 @@ export default {
       busnessTypes: [],
       busnessType: '',
       typelist:[],
-      selectProductID:-1
+      selectProductID:-1,
+      editContent: ''
     };
   },
   created() {
