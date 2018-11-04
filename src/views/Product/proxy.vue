@@ -103,7 +103,7 @@
           <el-col :span="8"><img v-bind:src=form.image style="width:100%"></el-col>
         </el-row>
         <el-row>
-          <tinymce  ref="editor" :height="400" v-model="editContent" />
+          <tinymce ref="editor" :height="400" v-model="editContent" />
         </el-row>
       </el-form>
 
@@ -166,13 +166,13 @@
 <script>
 import { getList, create, update, getproductbytype,createproductType,updatetypestatus } from "@/api/product";
 import { getType } from "@/api/manager";
-import Tinymce from '@/components/Tinymce'
+import tinymce from '@/components/Tinymce'
 // import "babel-polyfill"; // es6 shim
 import myUpload from "vue-image-crop-upload";
 
 export default {
   components: {
-    Tinymce
+    tinymce
   },
   filters: {
     statusFilter(status) {

@@ -14,3 +14,18 @@ export function getType() {
         method: 'get'
     })
 }
+
+export function setIsadmin(params) {
+    return request({
+        url: '/setIsadmin',
+        method: 'post',
+        data: params
+    })
+}
+export function setIsinternal(params) {
+    return request({
+        url: '/setIsinternal',
+        method: 'post',
+        data: params
+    })
+}

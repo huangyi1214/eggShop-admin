@@ -3,9 +3,11 @@
         <div class="filter-container">
         <el-input placeholder="请输入手机号" v-model="listQuery.PHONE" style="width: 200px;" class="filter-item" />
         <el-input placeholder="请输入姓名" v-model="listQuery.NAME" style="width: 200px;" class="filter-item" />
-        <el-select v-model="listQuery.busnessType" :placeholder="请选择信贷类型" clearable style="width: 400px" class="filter-item">
+        <el-select v-model="listQuery.busnessType" clearable style="width: 400px" class="filter-item">
           <el-option v-for="item in busnessTypes" :key="item.ID" :label="item.name" :value="item.ID"/>
         </el-select>
+              <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
+
       <!-- <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
       <el-button :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">{{ $t('table.export') }}</el-button>
       <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">{{ $t('table.reviewer') }}</el-checkbox> -->
@@ -49,10 +51,14 @@
           {{ scope.row.POST }}
         </template>
       </el-table-column>
-          </el-table-column>
-        <el-table-column align="center" label="操作" width="160">
+        <el-table-column align="center" label="操作" width="320">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="showDetail(scope.row)">详情</el-button>
+          <el-button v-if="scope.row.IsAdmin" type="primary" size="mini" @click="setIsadmin(scope.row)">取消管理员</el-button>
+          <el-button v-else type="primary" size="mini" @click="setIsadmin(scope.row)">设为管理员</el-button>
+
+          <el-button v-if="scope.row.Isinternal" type="primary" size="mini" @click="setIsinternal(scope.row)">取消员工资格</el-button>
+          <el-button v-else type="primary" size="mini" @click="setIsinternal(scope.row)">设为员工</el-button>
 
         </template>
       </el-table-column>
@@ -63,32 +69,9 @@
     </div>
 
 <el-dialog title="信贷经理资料" :visible.sync="dialogVisible" >
-  <el-row class="row">
-    <el-col :span="12"><div>名称:<span>{{form.NAME}}</span></div></el-col>
-    <el-col :span="12"><div>手机号:<span>{{form.PHONE}}</span></div></el-col>
-  </el-row>
-  <el-row class="row">
-    <el-col :span="12"><div>身份证号码:<span>{{form.ID_CARD_NO}}</span></div></el-col>
-    <el-col :span="12"><div>身份证有效期:<span>{{form.VALIDITY}}</span></div></el-col>
-  </el-row>
-  <el-row class="row">
-        <el-col :span="12"><div>信贷类型:<span>{{form.busnessname}}</span></div></el-col>
-        <el-col :span="12"><div>公司名称:<span>{{form.COMPANY_NAME}}</span></div></el-col>
-  </el-row>
-  <el-row class="row">
-      <el-col>身份证图片</el-col>
-  </el-row>
-  <el-row :gutter="20" class="row">
-            <el-col :span="8"><div><img v-bind:src=form.ID_PHOTO style="width:100%"></img></div></el-col>
-            <el-col :span="8"><div><img v-bind:src=form.ID_PHOTO_Negative style="width:100%"></img></div></el-col>
-  </el-row>
-  <el-row class="row">
-      <el-col>工作证</el-col>
-  </el-row>
-    <el-row>
-            <el-col :span="8"><div><img v-bind:src=form.WORK_PERMIT style="width:100%"></img></div></el-col>
-  </el-row>
 
+
+  <managerdetail :manage=form />
   <div slot="footer" class="dialog-footer">
     <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
   </div>
@@ -97,7 +80,8 @@
 </template>
 
 <script>
-import { getList, getType } from "@/api/manager";
+import { getList, getType,  setIsadmin, setIsinternal } from "@/api/manager";
+import managerdetail from "@/components/managerDetail"
 
 export default {
   filters: {
@@ -110,6 +94,7 @@ export default {
       return statusMap[status];
     }
   },
+  components:{managerdetail},
   data() {
     return {
       list: null,
@@ -150,6 +135,22 @@ export default {
       this.form = Object.assign(row, {});
       this.dialogVisible = true;
       console.log("row:" + JSON.stringify(row));
+    },
+    setIsadmin(row) {
+      let self=this;
+      console.log('row:'+JSON.stringify(row));
+      setIsadmin({IsAdmin:row.IsAdmin,userID:row.userID}).then(response => {
+
+          row.IsAdmin=row.IsAdmin==1?0:1;
+      });
+    },
+    setIsinternal(row) {
+      let self=this;
+      console.log('row:'+JSON.stringify(row));
+      setIsinternal({Isinternal:row.Isinternal,userID:row.userID}).then(response => {
+
+          row.Isinternal=row.Isinternal==1?0:1;
+      });
     },
     dialogFormVisible() {
       this.dialogVisible = false;

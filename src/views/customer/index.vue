@@ -45,25 +45,40 @@
       </el-table-column>
       <el-table-column align="center" label="房产情况" width="100">
         <template slot-scope="scope">
-          {{ scope.row.PropertyTypename }}
+          {{ scope.row.Property }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="有无汽车" width="100">
         <template slot-scope="scope">
-          {{ scope.row.carTypeName }}
+          {{ scope.row.car }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="户籍情况" width="100">
         <template slot-scope="scope">
-          {{ scope.row.censusTypeName }}
+          {{ scope.row.census }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="社保信息" width="100">
         <template slot-scope="scope">
-          {{ scope.row.Social_securityTypeName }}
+          {{ scope.row.Social_security }}
         </template>
       </el-table-column>
 
+      <el-table-column align="center" label="地址" width="100">
+        <template slot-scope="scope">
+          {{ scope.row.address }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="婚姻状况" width="100">
+        <template slot-scope="scope">
+          {{ scope.row.hunyin }}
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="负债信息" width="100">
+        <template slot-scope="scope">
+          {{ scope.row.owing }}
+        </template>
+      </el-table-column>
      </el-table>
     <div class="pagination-container">
       <el-pagination v-show="total>0" :current-page="listQuery.page" :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" :total="total" background layout="total, sizes, prev, pager, next, jumper" @size-change="handleSizeChange" @current-change="handleCurrentChange"/>

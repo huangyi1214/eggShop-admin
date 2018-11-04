@@ -100,4 +100,30 @@ export const asyncRouterMap = [
       }
     ]
   },
+  {
+    path: '/order',
+    component: Layout,
+    name: 'order',
+    meta: { title: '订单管理', icon: 'form' },
+    children: [
+      {
+        path: 'immediate',
+        name: '即时订单',
+        component: () => import('@/views/order/immediate'),
+        meta: { title: '即时订单', icon: 'form' }
+      },
+      {
+        path: 'internal',
+        name: '内部订单',
+        component: () => import('@/views/order/internal'),
+        meta: { title: '内部订单', icon: 'form' }
+      },
+      {
+        path: 'proxy',
+        name: '代理订单',
+        component: () => import('@/views/order/proxy'),
+        meta: { title: '代理订单', icon: 'form' }
+      }
+    ]
+  },
   { path: '*', redirect: '/404', hidden: true }]
