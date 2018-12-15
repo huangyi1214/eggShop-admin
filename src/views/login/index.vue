@@ -54,7 +54,7 @@ export default {
     }
     return {
       loginForm: {
-        username: '13800000007',
+        username: '1390000005',
         password: 'abc123456',
         type:2
       },

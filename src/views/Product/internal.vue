@@ -89,7 +89,7 @@
         </el-row>
         <el-row class="row">
           <el-upload
-            action="http://47.107.68.123:8090/uploadfile"
+            action="http://47.107.68.123:80/uploadfile"
             :on-success="handleAvatarSuccess"
             :on-preview="handlePictureCardPreview"
             :on-remove="handleRemove"
