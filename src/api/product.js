@@ -48,3 +48,13 @@ export function updatetypestatus(params) {
     data: params
   })
 }
+
+export function updateproductTypefee(params) {
+  console.log(JSON.stringify(params));
+  return request({
+    url: '/updateproductTypefee',
+    method: 'post',
+    data: params
+  })
+}
+//updateproductTypefee

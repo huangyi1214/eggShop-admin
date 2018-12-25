@@ -89,6 +89,11 @@ export const asyncRouterMap = [
     meta: { title: '产品中心', icon: 'form' },//,roles:['product_internal','product_proxy'] 
     children: [
       {
+        path: 'immediate',
+        name: '即时抢单产品',
+        component: () => import('@/views/product/immediate'),
+        meta: { title: '内部产品', icon: 'form' ,roles:['product_internal']}//,roles:['product_internal']
+      },      {
         path: 'internal',
         name: '内部产品',
         component: () => import('@/views/product/internal'),
