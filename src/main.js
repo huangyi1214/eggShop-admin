@@ -13,8 +13,7 @@ import store from './store'
 
 import '@/icons' // icon
 import '@/permission' // permission control
-import VueSocketio from 'vue-socket.io';
-Vue.use(VueSocketio, 'http://127.0.0.1:9004');
+
 
 Vue.use(ElementUI)
 
