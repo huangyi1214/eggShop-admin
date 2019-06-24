@@ -65,91 +65,21 @@ export const asyncRouterMap = [
     path: '/user',
     component: Layout,
     name: 'user',
-    meta: { title: '会员中心', icon: 'form' },//,roles:['']
+    meta: { title: '管理中心', icon: 'form' },//,roles:['']
     children: [
       {
         path: 'index',
-        name: '客户端',
+        name: '订单管理',
         component: () => import('@/views/customer/index'),
-        meta: { title: '客户端', icon: 'form' ,roles:['user_customer']}
+        meta: { title: '订单管理', icon: 'form' }
       },
       {
-        path: 'index1',
-        name: 'Form1',
-        component: () => import('@/views/manager/manager'),
-        meta: { title: '经理端', icon: 'form' ,roles:['user_manager']}
-      }
+        path: 'aceptOrder',
+        name: '完成订单',
+        component: () => import('@/views/customer/aceptOrder'),
+        meta: { title: '完成订单', icon: 'form' }
+      },
     ]
   },
-  {
-    path: '/product',
-    component: Layout,
-    name: 'product',
-    meta: { title: '产品中心', icon: 'form' },//,roles:['product_internal','product_proxy'] 
-    children: [
-      {
-        path: 'immediate',
-        name: '即时抢单产品',
-        component: () => import('@/views/product/immediate'),
-        meta: { title: '内部产品', icon: 'form' ,roles:['product_internal']}//,roles:['product_internal']
-      },      {
-        path: 'internal',
-        name: '内部产品',
-        component: () => import('@/views/product/internal'),
-        meta: { title: '内部产品', icon: 'form' ,roles:['product_internal']}//,roles:['product_internal']
-      },
-      {
-        path: 'proxy',
-        name: '代理产品',
-        component: () => import('@/views/product/proxy'),
-        meta: { title: '代理产品', icon: 'form' ,roles:['product_proxy']}//,roles:['product_proxy']
-      }
-    ]
-  },
-  {
-    path: '/order',
-    component: Layout,
-    name: 'order',
-    meta: { title: '订单管理', icon: 'form' },
-    children: [
-      {
-        path: 'immediate',
-        name: '即时订单',
-        component: () => import('@/views/order/immediate'),
-        meta: { title: '即时订单', icon: 'form',roles:['order_immediate'] }
-      },
-      {
-        path: 'internal',
-        name: '内部订单',
-        component: () => import('@/views/order/internal'),
-        meta: { title: '内部订单', icon: 'form' ,roles:['order_internal']}
-      },
-      {
-        path: 'proxy',
-        name: '代理订单',
-        component: () => import('@/views/order/proxy'),
-        meta: { title: '代理订单', icon: 'form' ,roles:['order_proxy']}
-      }
-    ]
-  },
-  {
-    path: '/control',
-    component: Layout,
-    name: 'control',
-    meta: { title: '系统管理', icon: 'form' ,roles:['Permission_menu']},
-    children: [
-      {
-        path: 'menu',
-        name: '菜单管理',
-        component: () => import('@/views/Permission/menu'),
-        meta: { title: '菜单管理', icon: 'form' ,roles:['Permission_menu']}
-      },
-      {
-        path: 'role',
-        name: '角色管理',
-        component: () => import('@/views/Permission/role'),
-        meta: { title: '角色管理', icon: 'form',roles:['Permission_role'] }//
-      }
-    ]
-  },
+  
   { path: '*', redirect: '/404', hidden: true }]
